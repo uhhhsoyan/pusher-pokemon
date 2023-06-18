@@ -1,147 +1,96 @@
-import { observer } from "mobx-react-lite"
-import React, { FC, useEffect, useMemo, useRef, useState } from "react"
-import { TextInput, TextStyle, ViewStyle } from "react-native"
-import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
-import { useStores } from "../models"
-import { AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
+import { AppStackScreenProps } from "app/navigators"
+import React from "react"
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native"
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 
-export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_props) {
-  const authPasswordInput = useRef<TextInput>()
+export function LoginScreen(props: LoginScreenProps) {
+  const [username, setUsername] = React.useState("")
 
-  const [authPassword, setAuthPassword] = useState("")
-  const [isAuthPasswordHidden, setIsAuthPasswordHidden] = useState(true)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [attemptsCount, setAttemptsCount] = useState(0)
-  const {
-    authenticationStore: { authEmail, setAuthEmail, setAuthToken, validationError },
-  } = useStores()
+  // async componentDidMount() {
+  //     try {
+  //       this.backgroundSound = new Audio.Sound();
+  //       await this.backgroundSound.loadAsync(
+  //         require("../assets/sounds/background/opening.mp3")
+  //       );
+  //       await this.backgroundSound.setIsLoopingAsync(true);
+  //       await this.backgroundSound.playAsync();
+  //     } catch (error) {
+  //       console.log("error loading background sound: ", error);
+  //     }
+  //   }
+  const login = () => {
+    if (username) {
+      props.navigation.navigate("TeamSelect", {
+        username,
+      })
 
-  useEffect(() => {
-    // Here is where you could fetch credentials from keychain or storage
-    // and pre-fill the form fields.
-    setAuthEmail("ignite@infinite.red")
-    setAuthPassword("ign1teIsAwes0m3")
-  }, [])
-
-  const error = isSubmitted ? validationError : ""
-
-  function login() {
-    setIsSubmitted(true)
-    setAttemptsCount(attemptsCount + 1)
-
-    if (validationError) return
-
-    // Make a request to your server to get an authentication token.
-    // If successful, reset the fields and set the token.
-    setIsSubmitted(false)
-    setAuthPassword("")
-    setAuthEmail("")
-
-    // We'll mock this with a fake token.
-    setAuthToken(String(Date.now()))
+      //   backgroundSound.stopAsync();
+    }
   }
 
-  const PasswordRightAccessory = useMemo(
-    () =>
-      function PasswordRightAccessory(props: TextFieldAccessoryProps) {
-        return (
-          <Icon
-            icon={isAuthPasswordHidden ? "view" : "hidden"}
-            color={colors.palette.neutral800}
-            containerStyle={props.style}
-            size={20}
-            onPress={() => setIsAuthPasswordHidden(!isAuthPasswordHidden)}
-          />
-        )
-      },
-    [isAuthPasswordHidden],
-  )
-
-  useEffect(() => {
-    return () => {
-      setAuthPassword("")
-      setAuthEmail("")
-    }
-  }, [])
-
   return (
-    <Screen
-      preset="auto"
-      contentContainerStyle={$screenContentContainer}
-      safeAreaEdges={["top", "bottom"]}
-    >
-      <Text testID="login-heading" tx="loginScreen.signIn" preset="heading" style={$signIn} />
-      <Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
-      {attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />}
+    <View style={styles.container}>
+      <View style={styles.top}>
+        <Image source={require("assets/images/pokemon/pikachu.gif")} />
+        <Text style={styles.headerText}>Pokémon Battles</Text>
+      </View>
 
-      <TextField
-        value={authEmail}
-        onChangeText={setAuthEmail}
-        containerStyle={$textField}
-        autoCapitalize="none"
-        autoComplete="email"
-        autoCorrect={false}
-        keyboardType="email-address"
-        labelTx="loginScreen.emailFieldLabel"
-        placeholderTx="loginScreen.emailFieldPlaceholder"
-        helper={error}
-        status={error ? "error" : undefined}
-        onSubmitEditing={() => authPasswordInput.current?.focus()}
-      />
+      <View style={styles.main}>
+        <Text style={styles.label}>Enter username</Text>
+        <TextInput
+          autoCapitalize="none"
+          style={styles.textInput}
+          onChangeText={(username) => setUsername(username)}
+          value={username}
+        />
 
-      <TextField
-        ref={authPasswordInput}
-        value={authPassword}
-        onChangeText={setAuthPassword}
-        containerStyle={$textField}
-        autoCapitalize="none"
-        autoComplete="password"
-        autoCorrect={false}
-        secureTextEntry={isAuthPasswordHidden}
-        labelTx="loginScreen.passwordFieldLabel"
-        placeholderTx="loginScreen.passwordFieldPlaceholder"
-        onSubmitEditing={login}
-        RightAccessory={PasswordRightAccessory}
-      />
-
-      <Button
-        testID="login-button"
-        tx="loginScreen.tapToSignIn"
-        style={$tapButton}
-        preset="reversed"
-        onPress={login}
-      />
-    </Screen>
+        <TouchableOpacity onPress={login} style={styles.button}>
+          <Text style={styles.buttonText}>Sign in</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   )
+}
+
+const styles = StyleSheet.create({
+  button: {
+    alignSelf: "center",
+    marginTop: 10,
+  },
+  buttonText: {
+    color: "#05a5d1",
+    fontSize: 18,
+  },
+  container: {
+    backgroundColor: "#FFF",
+    flex: 10,
+    padding: 20,
+  },
+  headerText: {
+    fontSize: 30,
+    fontWeight: "bold",
+    marginTop: 10,
+  },
+  label: {
+    fontSize: 16,
+  },
+  main: {
+    flex: 6,
+    justifyContent: "flex-start",
+  },
+  textInput: {
+    backgroundColor: "#eaeaea",
+    borderColor: "#ccc",
+    borderWidth: 1,
+    height: 40,
+    marginBottom: 10,
+    marginTop: 5,
+    padding: 5,
+  },
+  top: {
+    alignItems: "center",
+    flex: 4,
+    justifyContent: "center",
+  },
 })
-
-const $screenContentContainer: ViewStyle = {
-  paddingVertical: spacing.xxl,
-  paddingHorizontal: spacing.lg,
-}
-
-const $signIn: TextStyle = {
-  marginBottom: spacing.sm,
-}
-
-const $enterDetails: TextStyle = {
-  marginBottom: spacing.lg,
-}
-
-const $hint: TextStyle = {
-  color: colors.tint,
-  marginBottom: spacing.md,
-}
-
-const $textField: ViewStyle = {
-  marginBottom: spacing.lg,
-}
-
-const $tapButton: ViewStyle = {
-  marginTop: spacing.xs,
-}
-
-// @demo remove-file

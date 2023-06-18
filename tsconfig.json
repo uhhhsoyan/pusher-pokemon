@@ -17,7 +17,7 @@
     "resolveJsonModule": true,
     "baseUrl": "./"
   },
-  "exclude": ["node_modules"],
-  "include": ["index.js", "App.js", "app", "test", "*.js"],
+  "exclude": ["node_modules, server"],
+  "include": ["index.js", "App.js", "app", "test", "*.js", "server"],
   "extends": "expo/tsconfig.base"
 }

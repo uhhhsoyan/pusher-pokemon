@@ -5,7 +5,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "react-native start",
-    "ios": "react-native run-ios",
+    "ios": "react-native run-ios --simulator=\"iPhone 14 Pro Max\"",
     "android": "react-native run-android --active-arch-only",
     "compile": "tsc --noEmit -p . --pretty",
     "format": "prettier --write \"app/**/*.{js,jsx,json,md,ts,tsx}\"",
@@ -25,7 +25,8 @@
     "expo:start": "expo start",
     "expo:android": "expo start --android",
     "expo:ios": "expo start --ios",
-    "expo:web": "expo start --web"
+    "expo:web": "expo start --web",
+    "start:server": "node server/index.js"
   },
   "overrides": {
     "react-error-overlay": "6.0.9"
@@ -33,6 +34,7 @@
   "dependencies": {
     "@expo-google-fonts/space-grotesk": "^0.2.2",
     "@expo/webpack-config": "^18.0.1",
+    "@pusher/pusher-websocket-react-native": "^1.2.2",
     "@react-native-async-storage/async-storage": "1.17.11",
     "@react-navigation/bottom-tabs": "^6.3.2",
     "@react-navigation/native": "^6.0.2",
@@ -63,7 +65,8 @@
     "react-native-screens": "~3.20.0",
     "reactotron-mst": "3.1.4",
     "reactotron-react-js": "^3.3.7",
-    "reactotron-react-native": "5.0.3"
+    "reactotron-react-native": "5.0.3",
+    "valtio": "^1.10.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -193,7 +196,8 @@
       "react-native/no-raw-text": 0,
       "react/no-unescaped-entities": 0,
       "react/prop-types": 0,
-      "space-before-function-paren": 0
+      "space-before-function-paren": 0,
+      "react-native/no-color-literals": 0
     }
   }
 }

@@ -40,6 +40,7 @@ export type AppStackParamList = {
   Demo: NavigatorScreenParams<DemoTabParamList> // @demo remove-current-line
   // 🔥 Your screens go here
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
+  TeamSelect: { username: string }
 }
 
 /**
@@ -58,9 +59,10 @@ const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = observer(function AppStack() {
   // @demo remove-block-start
-  const {
-    authenticationStore: { isAuthenticated },
-  } = useStores()
+  // const {
+  //   authenticationStore: { isAuthenticated },
+  // } = useStores()
+  const isAuthenticated = false
 
   // @demo remove-block-end
   return (
@@ -79,11 +81,9 @@ const AppStack = observer(function AppStack() {
       ) : (
         <>
           <Stack.Screen name="Login" component={Screens.LoginScreen} />
+          <Stack.Screen name="TeamSelect" component={Screens.TeamSelectionScreen} />
         </>
       )}
-      {/* @demo remove-block-end */}
-      {/** 🔥 Your screens go here */}
-      {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
 })

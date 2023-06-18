@@ -100,7 +100,14 @@ PODS:
     - hermes-engine/Pre-built (= 0.71.7)
   - hermes-engine/Pre-built (0.71.7)
   - libevent (2.1.12)
+  - NWWebSocket (0.5.2)
   - OpenSSL-Universal (1.1.1100)
+  - pusher-websocket-react-native (1.2.2):
+    - PusherSwift (~> 10.1.1)
+    - React
+  - PusherSwift (10.1.2):
+    - NWWebSocket (~> 0.5.2)
+    - TweetNacl (~> 1.0.0)
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -479,6 +486,7 @@ PODS:
     - React-Core
     - React-RCTImage
   - SocketRocket (0.6.0)
+  - TweetNacl (1.0.2)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -523,6 +531,7 @@ DEPENDENCIES:
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
   - OpenSSL-Universal (= 1.1.1100)
+  - "pusher-websocket-react-native (from `../node_modules/@pusher/pusher-websocket-react-native`)"
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -574,8 +583,11 @@ SPEC REPOS:
     - FlipperKit
     - fmt
     - libevent
+    - NWWebSocket
     - OpenSSL-Universal
+    - PusherSwift
     - SocketRocket
+    - TweetNacl
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -611,6 +623,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
+  pusher-websocket-react-native:
+    :path: "../node_modules/@pusher/pusher-websocket-react-native"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -709,7 +723,10 @@ SPEC CHECKSUMS:
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   hermes-engine: 4438d2b8bf8bebaba1b1ac0451160bab59e491f8
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
+  NWWebSocket: 21f0c73639815da3272862c912275b26102aa80c
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
+  pusher-websocket-react-native: ca8f78071843c907a13c364c1c0e21c05dbde934
+  PusherSwift: fb30ba1dcbe09a6ca257ccb39dc2f84866e811b4
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 5a4a30ac20c86eeadd6844a9328f78d4168cf9b2
   RCTTypeSafety: 279fc5861a89f0f37db3a585f27f971485b4b734
@@ -744,6 +761,7 @@ SPEC CHECKSUMS:
   RNReanimated: cc5e3aa479cb9170bcccf8204291a6950a3be128
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
+  TweetNacl: 3abf4d1d2082b0114e7a67410e300892448951e6
   Yoga: d56980c8914db0b51692f55533409e844b66133c
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
