@@ -1,3 +1,9 @@
+// Note: having issues with dynamic requires
+// Try these:
+// https://pokemondb.net/sprites/blastoise
+// https://img.pokemondb.net/sprites/black-white/anim/normal/blastoise.gif
+// https://img.pokemondb.net/sprites/black-white/anim/back-normal/blastoise.gif
+
 export const pokemonData = [
   {
     id: 1,

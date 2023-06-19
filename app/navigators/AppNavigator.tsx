@@ -16,10 +16,10 @@ import React from "react"
 import { useColorScheme } from "react-native"
 import * as Screens from "app/screens"
 import Config from "../config"
-import { useStores } from "../models" // @demo remove-current-line
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
+import { Pusher, PusherChannel } from "@pusher/pusher-websocket-react-native"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -41,6 +41,17 @@ export type AppStackParamList = {
   // 🔥 Your screens go here
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
   TeamSelect: { username: string }
+  Battle: {
+    // pusher: Pusher
+    username: string
+    opponent: {
+      username: string
+      pokemonIds: number[]
+      teamMemberIds: number[]
+    } // ^ inferred from server code, check this
+    firstTurn: string
+    // myChannel: PusherChannel
+  }
 }
 
 /**
@@ -82,6 +93,7 @@ const AppStack = observer(function AppStack() {
         <>
           <Stack.Screen name="Login" component={Screens.LoginScreen} />
           <Stack.Screen name="TeamSelect" component={Screens.TeamSelectionScreen} />
+          <Stack.Screen name="Battle" component={Screens.BattleScreen} />
         </>
       )}
     </Stack.Navigator>

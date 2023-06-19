@@ -1,6 +1,6 @@
 import { PokemonList } from "app/components/pokemon/PokemonList"
 import { AppStackScreenProps } from "app/navigators"
-import { useLooseSnapshot } from "app/valtio"
+import { setPokemon, setTeam, useLooseSnapshot } from "app/valtio"
 import { teamState } from "app/valtio/TeamState"
 import React from "react"
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert } from "react-native"
@@ -19,7 +19,7 @@ interface TeamSelectionScreenProps extends AppStackScreenProps<"TeamSelect"> {}
 
 const authEndpoint = "https://pusher-pokemon.ngrok.io/pusher/auth"
 
-export function TeamSelectionScreen(props: TeamSelectionScreenProps) {
+export function TeamSelectionScreen({ navigation, route }: TeamSelectionScreenProps) {
   // async componentDidMount() {
   //     try {
   //       this.backgroundSound = new Audio.Sound();
@@ -33,13 +33,14 @@ export function TeamSelectionScreen(props: TeamSelectionScreenProps) {
   //     }
   //   }
 
-  const { username } = props.route.params
+  const { username } = route.params
 
   const teamSnap = useLooseSnapshot(teamState)
   const { pokemon, selectedPokemon } = teamSnap
   const [isLoading, setIsLoading] = React.useState(false)
   const confirmTeam = async () => {
     let team = [...selectedPokemon]
+    console.log(`team: ${JSON.stringify(team)}`)
     const pokemonIds = []
     const teamMemberIds = []
     team = team.map((item) => {
@@ -69,8 +70,8 @@ export function TeamSelectionScreen(props: TeamSelectionScreenProps) {
     })
 
     // battle state
-    // setTeam(team);
-    // setPokemon(team[0]);
+    setTeam(team)
+    setPokemon(team[0])
 
     setIsLoading(true)
 
@@ -150,12 +151,27 @@ export function TeamSelectionScreen(props: TeamSelectionScreenProps) {
         Alert.alert(`Event received: ${event.eventName}`)
       },
     })
+
+    // TODO: Construct from payload in 'opponent-found' event
+    const opponent = {
+      username: "opponent",
+      pokemonIds: [],
+      teamMemberIds: [],
+    }
+
+    navigation.navigate("Battle", {
+      // pusher, // TODO: Check this
+      username,
+      opponent,
+      // myChannel,
+      firstTurn: "you",
+    })
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Select your team</Text>
-      <TouchableOpacity style={styles.confirmButton} onPress={() => props.navigation.goBack()}>
+      <TouchableOpacity style={styles.confirmButton} onPress={() => navigation.goBack()}>
         <Text>Go back</Text>
       </TouchableOpacity>
 
